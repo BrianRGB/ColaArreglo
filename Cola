@@ -1,0 +1,55 @@
+import javax.swing.*;
+
+class Cola {
+    private String[] elementos;
+    private int frente;
+    private int fin;
+    private int tamanio;
+
+    public Cola(int capacidad) {
+        elementos = new String[capacidad];
+        frente = 0;
+        fin = -1;
+        tamanio = 0;
+    }
+
+    public void encolar(String elemento) {
+        if (estaLlena()) {
+            throw new RuntimeException("La cola está llena");
+        }
+        fin = (fin + 1) % elementos.length;
+        elementos[fin] = elemento;
+        tamanio++;
+    }
+
+    public String desencolar() {
+        if (estaVacia()) {
+            throw new RuntimeException("La cola está vacía");
+        }
+        String elemento = elementos[frente];
+        frente = (frente + 1) % elementos.length;
+        tamanio--;
+        return elemento;
+    }
+
+    public boolean estaVacia() {
+        return tamanio == 0;
+    }
+
+    public boolean estaLlena() {
+        return tamanio == elementos.length;
+    }
+
+    public void mostrarCola() {
+        if (estaVacia()) {
+            JOptionPane.showMessageDialog(null, "La cola está vacía");
+            return;
+        }
+        StringBuilder contenidoCola = new StringBuilder("Contenido de la cola:\n");
+        for (int i = 0; i < tamanio; i++) {
+            contenidoCola.append(elementos[(frente + i) % elementos.length]).append("\n");
+        }
+        JOptionPane.showMessageDialog(null, contenidoCola.toString());
+    }
+
+}
