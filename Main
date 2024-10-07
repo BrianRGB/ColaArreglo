@@ -1,0 +1,54 @@
+import javax.swing.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        menuCola();
+    }
+
+
+    public static void menuCola() {
+        Scanner scanner = new Scanner(System.in);
+
+        int capacidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de impresiones: "));
+        Cola cola = new Cola(capacidad);
+
+        while (true) {
+            int opcion = Integer.parseInt( JOptionPane.showInputDialog("1. Imprimir" +
+                    "\n2. Cancelar impresion" +
+                    "\n3.Mostrar impresiones en cola" +
+                    "\n4.Cancelar impresiones"));
+
+            switch (opcion) {
+                case 1:
+                   String impr=JOptionPane.showInputDialog("Ingrese el nombre del documento a imprimir: ");
+                    try {
+                        cola.encolar(impr);
+                       JOptionPane.showMessageDialog(null, impr + " se ha puesto en cola");
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 2:
+                    try {
+                        String elementoDesencolado = cola.desencolar();
+                        JOptionPane.showMessageDialog(null,elementoDesencolado + " se ha cancelado la impresion");
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 3:
+                    cola.mostrarCola();
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(null, "Cancelando impresiones");
+                    scanner.close();
+                    return;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opcion invalida, pruebe de nuevo");
+            }
+        }
+    }
+
+
+}
